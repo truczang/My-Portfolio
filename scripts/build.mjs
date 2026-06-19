@@ -3,7 +3,7 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
-const distDir = `.next-build-${stamp}`;
+const distDir = process.env.VERCEL ? ".next" : `.next-build-${stamp}`;
 const nextCli = path.join(
   process.cwd(),
   "node_modules",
