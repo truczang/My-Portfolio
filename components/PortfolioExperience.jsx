@@ -185,6 +185,24 @@ export default function PortfolioExperience() {
   const activeId = selectedProject?.id ?? projects[0].id;
   const sections = useMemo(() => introSections, []);
 
+  useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
   const openProject = (project) => {
     setSelectedProject(project);
     setMode("details");
