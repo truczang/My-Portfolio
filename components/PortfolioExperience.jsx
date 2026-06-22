@@ -91,20 +91,57 @@ function SlideControls({ currentIndex, total, onPrevious, onNext }) {
   );
 }
 
+function getSlideKey(slide) {
+  return typeof slide === "string" ? slide : `${slide.type}-${slide.id}`;
+}
+
+function SlideContent({ project, slide, slideIndex }) {
+  if (typeof slide === "string") {
+    return (
+      <img
+        key={slide}
+        className="slide-image"
+        src={slide}
+        alt={`${project.title} presentation slide ${slideIndex + 1}`}
+      />
+    );
+  }
+
+  if (slide.type === "youtube") {
+    return (
+      <div className="video-slide" key={getSlideKey(slide)}>
+        <div className="video-copy">
+          <p>{project.studio}</p>
+          <h2>{project.title}</h2>
+          <a href={slide.url} target="_blank" rel="noreferrer">
+            Open on YouTube
+          </a>
+        </div>
+        <div className="video-frame">
+          <iframe
+            src={slide.embedUrl}
+            title={slide.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 function GameSlideshow({ project, slideIndex, setSlideIndex }) {
   const total = project.slides.length;
+  const activeSlide = project.slides[slideIndex];
   const previous = () => setSlideIndex((index) => (index - 1 + total) % total);
   const next = () => setSlideIndex((index) => (index + 1) % total);
 
   return (
     <div className="slideshow-mode">
       <div className="slide-stage">
-        <img
-          key={project.slides[slideIndex]}
-          className="slide-image"
-          src={project.slides[slideIndex]}
-          alt={`${project.title} presentation slide ${slideIndex + 1}`}
-        />
+        <SlideContent project={project} slide={activeSlide} slideIndex={slideIndex} />
         <SlideControls currentIndex={slideIndex} total={total} onPrevious={previous} onNext={next} />
       </div>
     </div>

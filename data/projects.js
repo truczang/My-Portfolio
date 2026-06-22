@@ -1,5 +1,16 @@
 const asset = (fileName) => `/assets/${encodeURIComponent(fileName)}`;
 
+const youtubeSlide = ({ id, title, url }) => ({
+  type: "youtube",
+  id,
+  title,
+  url,
+  embedUrl: `https://www.youtube.com/embed/${id}`,
+  thumbnail: `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
+});
+
+const youtubeThumbnail = (id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+
 export const introSections = [
   {
     id: "port1",
@@ -33,7 +44,13 @@ export const projects = [
       "Portfolio 9 Match Buddies.png",
       "Portfolio 10 Match Buddies.png",
       "Portfolio 11 Match Buddies.png"
-    ].map(asset)
+    ].map(asset).concat(
+      youtubeSlide({
+        id: "Yv4L1uDjdmk",
+        title: "Match Buddies demo video",
+        url: "https://www.youtube.com/watch?v=Yv4L1uDjdmk"
+      })
+    )
   },
   {
     id: "sortile-cluster",
@@ -98,5 +115,23 @@ export const projects = [
       "Portfolio 43 Pirate Squid.png",
       "Portfolio 44 Pirate Squid.png"
     ].map(asset)
+  },
+  {
+    id: "challenge-game",
+    title: "Challenge Game",
+    studio: "Game Demo",
+    accent: "cyan",
+    menuLabel: "CHALLENGE GAME",
+    summary:
+      "A focused demo showcase page presenting the Challenge Game video in the same polished portfolio style.",
+    role: "Game demo presentation",
+    preview: youtubeThumbnail("MfoGU4q1vTI"),
+    slides: [
+      youtubeSlide({
+        id: "MfoGU4q1vTI",
+        title: "Challenge Game demo video",
+        url: "https://www.youtube.com/watch?v=MfoGU4q1vTI"
+      })
+    ]
   }
 ];
