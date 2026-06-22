@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import RetroMenu from "@/components/RetroMenu";
 import { introSections, projects } from "@/data/projects";
 
 function PortSection({ section, nextId }) {
@@ -16,61 +17,16 @@ function PortSection({ section, nextId }) {
   );
 }
 
-function GameOption({ project, isActive, onSelect }) {
-  return (
-    <button
-      className={`game-option ${isActive ? "is-active" : ""}`}
-      type="button"
-      onClick={() => onSelect(project)}
-      aria-pressed={isActive}
-    >
-      <span className="option-arrow" aria-hidden="true">
-        &gt;
-      </span>
-      <span>
-        {project.menuLabel}
-        {project.studio ? <small>{project.studio}</small> : null}
-      </span>
-    </button>
-  );
-}
+function GameSelectionSection({ onSelect }) {
+  const handleItemClick = (item) => {
+    const project = projects.find((candidate) => candidate.id === item.projectId);
+    if (project) onSelect(project);
+  };
 
-function TVFrame({ activeId, onSelect }) {
-  return (
-    <div className="tv-frame" aria-label="Game portfolio projects">
-      <div className="tv-glass">
-        <p className="screen-kicker">SELECT PROJECT</p>
-        <h2>MAIN MENU</h2>
-        <div className="game-options">
-          {projects.map((project) => (
-            <GameOption
-              key={project.id}
-              project={project}
-              isActive={activeId === project.id}
-              onSelect={onSelect}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="tv-neck" />
-      <div className="tv-base" />
-    </div>
-  );
-}
-
-function GameSelectionSection({ activeId, onSelect }) {
   return (
     <section className="port-section game-selection" id="port3" aria-labelledby="port3-title">
-      <div className="room-light room-light-left" />
-      <div className="room-light room-light-right" />
-      <div className="desk-glow" />
-      <div className="orb-lamp" />
-      <div className="lava-lamp" />
-      <div className="port3-copy">
-        <p>Interactive Showcase</p>
-        <h1 id="port3-title">Choose a game</h1>
-      </div>
-      <TVFrame activeId={activeId} onSelect={onSelect} />
+      <h1 className="sr-only" id="port3-title">MAIN MENU</h1>
+      <RetroMenu onItemClick={handleItemClick} />
     </section>
   );
 }
@@ -219,7 +175,6 @@ export default function PortfolioExperience() {
   const [mode, setMode] = useState("details");
   const [slideIndex, setSlideIndex] = useState(0);
 
-  const activeId = selectedProject?.id ?? projects[0].id;
   const sections = useMemo(() => introSections, []);
 
   useEffect(() => {
@@ -256,7 +211,7 @@ export default function PortfolioExperience() {
     <main className="portfolio-app">
       <PortSection section={sections[0]} nextId="port2" />
       <PortSection section={sections[1]} nextId="port3" />
-      <GameSelectionSection activeId={activeId} onSelect={openProject} />
+      <GameSelectionSection onSelect={openProject} />
       {selectedProject ? (
         <GameModal
           project={selectedProject}

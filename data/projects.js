@@ -31,6 +31,7 @@ export const projects = [
     studio: "Playard Studio",
     accent: "cyan",
     menuLabel: "MATCH BUDDIES",
+    menuStudio: "PLAYARD STUDIO",
     summary:
       "A bright casual matching game with soft character art, playful seasonal props, and polished mobile UI screens.",
     role: "Character design, casual game assets, interface presentation",
@@ -58,6 +59,7 @@ export const projects = [
     studio: "Playard Studio",
     accent: "gold",
     menuLabel: "SORTILE CLUSTER",
+    menuStudio: "PLAYARD STUDIO",
     summary:
       "A cozy sorting puzzle world with cheerful characters, readable gameplay compositions, and mobile-ready UI states.",
     role: "Game visual concept, tile art, screen composition",
@@ -74,10 +76,10 @@ export const projects = [
   },
   {
     id: "vet-nut",
-    title: "Vet Nut",
+    title: "Vết Nứt",
     studio: "Board Game Project",
     accent: "lime",
-    menuLabel: "VET NUT",
+    menuLabel: "VẾT NỨT",
     summary:
       "A school-bullying board game concept using friendly illustration to communicate conflict, empathy, and teamwork.",
     role: "Educational board game art, visual storytelling, character scenes",
@@ -117,19 +119,20 @@ export const projects = [
     ].map(asset)
   },
   {
-    id: "challenge-game",
-    title: "Challenge Game",
+    id: "pegiquiz",
+    title: "PEGIQUIZ",
     studio: "Game Demo",
     accent: "cyan",
-    menuLabel: "CHALLENGE GAME",
+    menuLabel: "PEGIQUIZ",
     summary:
-      "A focused demo showcase page presenting the Challenge Game video in the same polished portfolio style.",
+      "A focused quiz demo showcase page presented in the same polished portfolio style.",
     role: "Game demo presentation",
-    preview: youtubeThumbnail("MfoGU4q1vTI"),
+    preview: asset("Portfolio 45 Pegiquiz.png"),
     slides: [
+      asset("Portfolio 45 Pegiquiz.png"),
       youtubeSlide({
         id: "MfoGU4q1vTI",
-        title: "Challenge Game demo video",
+        title: "PEGIQUIZ demo video",
         url: "https://www.youtube.com/watch?v=MfoGU4q1vTI"
       })
     ]
