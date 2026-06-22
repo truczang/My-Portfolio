@@ -34,11 +34,13 @@ type RetroMenuProps = {
   onItemClick?: (item: RetroMenuItem) => void;
 };
 
-const asset = (fileName: string) => `/assets/${encodeURIComponent(fileName)}`;
+const asset = (fileName: string) => `/assets/${fileName}`;
 
 const backgroundSrc = asset("Portfolio 3 Figma Menu Background.png");
 const titleSrc = asset("main menu.png");
-const arrowSrc = asset("\u2192.png");
+const arrowSrc = "/assets/%E2%86%92.png";
+const activeItemFilter =
+  "brightness(0) saturate(100%) invert(76%) sepia(88%) saturate(1572%) hue-rotate(346deg) brightness(102%) contrast(104%) drop-shadow(0px 2px 37.7px #ffb700)";
 
 const menuItems: RetroMenuItem[] = [
   {
@@ -47,9 +49,9 @@ const menuItems: RetroMenuItem[] = [
     alt: "Match Buddies Playard Studio",
     imageSrc: asset("match buddies (playard studio).png"),
     // Tweak imageBox top/left/width to fine-tune the visible PNG placement.
-    imageBox: { top: "36.5%", left: "15.4%", width: "78.8%" },
+    imageBox: { top: "36.5%", left: "12.8%", width: "78.8%" },
     // Tweak hitbox coordinates separately if you want larger click targets.
-    hitbox: { top: "35.2%", left: "13.2%", width: "82%", height: "8.5%" },
+    hitbox: { top: "35.2%", left: "11.2%", width: "85%", height: "8.5%" },
     // Tweak arrowTop to align the cursor PNG with this row.
     arrowTop: "36.6%",
   },
@@ -58,8 +60,8 @@ const menuItems: RetroMenuItem[] = [
     projectId: "sortile-cluster",
     alt: "Sortile Cluster Playard Studio",
     imageSrc: asset("sortile cluster (playard studio).png"),
-    imageBox: { top: "47.8%", left: "15.4%", width: "81.6%" },
-    hitbox: { top: "46.6%", left: "13.2%", width: "84%", height: "8.5%" },
+    imageBox: { top: "47.8%", left: "12.8%", width: "81.6%" },
+    hitbox: { top: "46.6%", left: "11.2%", width: "86%", height: "8.5%" },
     arrowTop: "47.9%",
   },
   {
@@ -67,8 +69,8 @@ const menuItems: RetroMenuItem[] = [
     projectId: "vet-nut",
     alt: "Vet Nut",
     imageSrc: asset("vet nut.png"),
-    imageBox: { top: "59.2%", left: "15.4%", width: "23.2%" },
-    hitbox: { top: "58%", left: "13.2%", width: "34%", height: "8.5%" },
+    imageBox: { top: "59.2%", left: "12.8%", width: "23.2%" },
+    hitbox: { top: "58%", left: "11.2%", width: "34%", height: "8.5%" },
     arrowTop: "59.3%",
   },
   {
@@ -76,8 +78,8 @@ const menuItems: RetroMenuItem[] = [
     projectId: "pirate-squid",
     alt: "Pirate Squid",
     imageSrc: asset("pirate squid.png"),
-    imageBox: { top: "70.4%", left: "15.4%", width: "32.4%" },
-    hitbox: { top: "69.2%", left: "13.2%", width: "42%", height: "8.5%" },
+    imageBox: { top: "70.4%", left: "12.8%", width: "32.4%" },
+    hitbox: { top: "69.2%", left: "11.2%", width: "42%", height: "8.5%" },
     arrowTop: "70.5%",
   },
   {
@@ -85,8 +87,8 @@ const menuItems: RetroMenuItem[] = [
     projectId: "pegiquiz",
     alt: "Pegiquiz",
     imageSrc: asset("pegiquiz.png"),
-    imageBox: { top: "81.8%", left: "15.4%", width: "23.8%" },
-    hitbox: { top: "80.6%", left: "13.2%", width: "34%", height: "8.5%" },
+    imageBox: { top: "81.8%", left: "12.8%", width: "23.8%" },
+    hitbox: { top: "80.6%", left: "11.2%", width: "34%", height: "8.5%" },
     arrowTop: "81.9%",
   },
 ];
@@ -107,6 +109,7 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
         alt=""
         fill
         priority
+        unoptimized
         sizes="100vw"
         className="absolute inset-0 object-cover"
       />
@@ -128,6 +131,7 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
             width={1062}
             height={210}
             priority
+            unoptimized
             className="h-auto w-full object-contain"
           />
         </div>
@@ -136,7 +140,7 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
           className="absolute"
           style={{
             top: hoveredItem.arrowTop,
-            left: "9.8%",
+            left: "6.9%",
             width: "4.7%",
           }}
         >
@@ -147,6 +151,7 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
             width={122}
             height={100}
             priority
+            unoptimized
             className="h-auto w-full object-contain"
           />
         </div>
@@ -165,11 +170,19 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
           />
         ))}
 
-        {menuItems.map((item) => (
+        {menuItems.map((item, index) => (
           <div
             key={`${item.id}-image`}
             className="pointer-events-none absolute"
-            style={item.imageBox as CSSProperties}
+            style={
+              {
+                ...item.imageBox,
+                filter:
+                  index === hoveredIndex
+                    ? activeItemFilter
+                    : "none",
+              } satisfies CSSProperties
+            }
           >
             <Image
               src={item.imageSrc}
@@ -177,6 +190,7 @@ export default function RetroMenu({ onItemClick }: RetroMenuProps) {
               width={980}
               height={100}
               priority
+              unoptimized
               className="h-auto w-full object-contain"
             />
           </div>

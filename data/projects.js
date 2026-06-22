@@ -129,7 +129,6 @@ export const projects = [
     role: "Game demo presentation",
     preview: asset("Portfolio 45 Pegiquiz.png"),
     slides: [
-      asset("Portfolio 45 Pegiquiz.png"),
       youtubeSlide({
         id: "MfoGU4q1vTI",
         title: "PEGIQUIZ demo video",
